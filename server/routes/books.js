@@ -1,3 +1,9 @@
+/**
+ * File Name: book.js
+ * Author: Shawn McLaughlin
+ * Student ID: 300824398
+ * Web App Name: https://comp308-w2017-midterm300824398.herokuapp.com/
+ */
 // modules required for routing
 let express = require('express');
 let router = express.Router();
@@ -8,18 +14,17 @@ let book = require('../models/books');
 
 /* GET books List page. READ */
 router.get('/', (req, res, next) => {
-  // find all books in the books collection
-  book.find( (err, books) => {
-    if (err) {
-      return console.error(err);
-    }
-    else {
-      res.render('books/index', {
-        title: 'Books',
-        books: books
-      });
-    }
-  });
+    // find all books in the books collection
+    book.find((err, books) => {
+        if (err) {
+            return console.error(err);
+        } else {
+            res.render('books/index', {
+                title: 'Books',
+                books: books
+            });
+        }
+    });
 
 });
 
