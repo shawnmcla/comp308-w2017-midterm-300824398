@@ -20,7 +20,8 @@ let User = UserModel.User;
 router.get('/', (req, res, next) => {
     res.render('content/index', {
         title: 'Home',
-        books: ''
+        books: '',
+        displayName: req.user ? req.user.displayName : ''
     });
 });
 

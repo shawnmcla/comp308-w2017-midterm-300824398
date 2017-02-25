@@ -1,3 +1,8 @@
+<!--
+header.ejs
+by Shawn McLaughlin 300824398
+https://comp308-w2017-midterm300824398.herokuapp.com/
+-->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -41,6 +46,12 @@
             </i> Books List</a></li>
           <% } %>
 
+        <% if(displayName) { %>
+          <li class="navbar-text"><i class="fa fa-user"></i> Welcome, <%= displayName %>.</li>
+          <li><a href="/logout"><i class="fa fa-sign-out"></i> Log Out</a></li>
+        <% } else {%>
+          <li><a href="/login"><i class="fa fa-sign-in"></i> Login</a></li>
+        <% } %>
       </ul>
     </div><!-- /.navbar-collapse -->
   </nav>
