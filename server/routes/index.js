@@ -57,6 +57,7 @@ router.get('/register', (req, res, next) => {
             displayName: req.user ? req.user.displayName : ''
         });
     }
+    res.redirect('/');
 });
 
 // POST /register - Process user registration
