@@ -36,7 +36,8 @@ router.get('/', requireAuth, (req, res, next) => {
         } else {
             res.render('books/index', {
                 title: 'Books',
-                books: books
+                books: books,
+                displayName: req.user ? req.user.displayName : ''
             });
         }
     });
