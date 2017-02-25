@@ -4,6 +4,7 @@
  * Student ID: 300824398
  * Web App Name: https://comp308-w2017-midterm300824398.herokuapp.com/
  */
+
 // modules required for routing
 let express = require('express');
 let router = express.Router();
@@ -25,16 +26,18 @@ router.get('/', (req, res, next) => {
             });
         }
     });
-
 });
 
 //  GET the Book Details page in order to add a new Book
 router.get('/add', (req, res, next) => {
-
     /*****************
      * ADD CODE HERE *
      *****************/
-
+    res.render('books/details', {
+        title: "Add a new Book",
+        books: '',
+        displayName: req.user ? req.user.displayName : ''
+    });
 });
 
 // POST process the Book Details page and create a new Book - CREATE
@@ -43,6 +46,23 @@ router.post('/add', (req, res, next) => {
     /*****************
      * ADD CODE HERE *
      *****************/
+
+    let newBook = book({
+        "Title": req.body.title,
+        "Price": req.body.price,
+        "Author": req.body.author,
+        "Genre": req.body.genre
+    });
+
+    book.create(newBook, (err, book) => {
+        if (err) {
+            console.log(err);
+            res.end("Error: " + err.message);
+            return;
+        } else {
+            res.redirect('/books');
+        }
+    });
 
 });
 
