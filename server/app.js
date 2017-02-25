@@ -1,3 +1,11 @@
+/**
+ * File Name: app.js
+ * Description: Main application entry point
+ * Author: Shawn McLaughlin
+ * Student ID: 300824398
+ * Web App Name: https://comp308-w2017-midterm300824398.herokuapp.com/
+ */
+
 // modules required for the project
 let express = require('express');
 let path = require('path'); // part of node.js core

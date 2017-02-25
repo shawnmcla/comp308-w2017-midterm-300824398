@@ -1,5 +1,6 @@
 /**
  * File Name: book.js
+ * Description: Routes for books functionality
  * Author: Shawn McLaughlin
  * Student ID: 300824398
  * Web App Name: https://comp308-w2017-midterm300824398.herokuapp.com/
