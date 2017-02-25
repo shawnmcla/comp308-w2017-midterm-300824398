@@ -1,3 +1,11 @@
+/**
+ * File Name: app.js
+ * Description: Main application entry point
+ * Author: Shawn McLaughlin
+ * Student ID: 300824398
+ * Web App Name: https://comp308-w2017-midterm300824398.herokuapp.com/
+ */
+
 // modules required for the project
 let express = require('express');
 let path = require('path'); // part of node.js core
@@ -5,6 +13,13 @@ let favicon = require('serve-favicon');
 let logger = require('morgan');
 let cookieParser = require('cookie-parser');
 let bodyParser = require('body-parser');
+//auth modules
+let session = require('express-session');
+let passport = require('passport');
+let passportlocal = require('passport-local');
+let LocalStrategy = passportlocal.Strategy;
+let flash = require('connect-flash'); //display errors/login messages
+
 
 // import "mongoose" - required for DB Access
 let mongoose = require('mongoose');
@@ -16,7 +31,7 @@ mongoose.connect(process.env.URI || config.URI);
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
-  console.log("Conneced to MongoDB...");
+    console.log("Conneced to MongoDB...");
 });
 
 // define routers
@@ -37,27 +52,46 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../client')));
 
+// setup sessions
+app.use(session({
+    secret: "SeizeTheMeansOfProduction",
+    saveUninitialized: true,
+    resave: true
+}));
 
-// route redirects
+//initialize passport and flash
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+
+//route redirects
 app.use('/', index);
 app.use('/books', books);
 
+//Passport User Configuration
+let UserModel = require('./models/users');
+let User = UserModel.User;
+passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
 
 // Handle 404 Errors
-  app.use(function(req, res) {
-      res.status(400);
-     res.render('errors/404',{
-      title: '404: File Not Found'
+app.use(function(req, res) {
+    res.status(400);
+    res.render('errors/404', {
+        title: '404: File Not Found'
     });
-  });
+});
 
-  // Handle 500 Errors
-  app.use(function(error, req, res, next) {
-      res.status(500);
-      res.render('errors/500', {
-        title:'500: Internal Server Error',
-        error: error
-      });
-  });
+// Handle 500 Errors
+app.use(function(error, req, res, next) {
+    res.status(500);
+    res.render('errors/500', {
+        title: '500: Internal Server Error',
+        error: "Error"
+    });
+});
 
 module.exports = app;
