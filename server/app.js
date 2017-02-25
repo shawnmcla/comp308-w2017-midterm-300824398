@@ -20,6 +20,7 @@ let passportlocal = require('passport-local');
 let LocalStrategy = passportlocal.Strategy;
 let flash = require('connect-flash'); //display errors/login messages
 
+
 // import "mongoose" - required for DB Access
 let mongoose = require('mongoose');
 // URI
@@ -51,11 +52,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../client')));
 
-
-// route redirects
-app.use('/', index);
-app.use('/books', books);
-
 // setup sessions
 app.use(session({
     secret: "SeizeTheMeansOfProduction",
@@ -68,9 +64,9 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-
+//route redirects
 app.use('/', index);
-app.use('/games', games);
+app.use('/books', books);
 
 //Passport User Configuration
 let UserModel = require('./models/users');

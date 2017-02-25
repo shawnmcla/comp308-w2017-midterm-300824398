@@ -1,11 +1,21 @@
+/**
+ * File Name: index.js
+ * Description: Main routes
+ * Author: Shawn McLaughlin
+ * Student ID: 300824398
+ * Web App Name: https://comp308-w2017-midterm300824398.herokuapp.com/
+ */
+
 // modules required for routing
 let express = require('express');
 let router = express.Router();
 let mongoose = require('mongoose');
-
+let passport = require('passport');
 // define the book model
 let book = require('../models/books');
-
+// define user models
+let UserModel = require('../models/users');
+let User = UserModel.User;
 /* GET home page. wildcard */
 router.get('/', (req, res, next) => {
     res.render('content/index', {
